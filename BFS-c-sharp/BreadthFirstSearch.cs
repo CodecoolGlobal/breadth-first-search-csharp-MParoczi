@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BFS_c_sharp.Model;
 
 namespace BFS_c_sharp
@@ -49,28 +50,29 @@ namespace BFS_c_sharp
             }
             
             List<UserNode> visitedUsers = new List<UserNode>();
-            Queue<UserNode> usersToVisit = new Queue<UserNode>();
-            int iteration = 0;
-            
-            usersToVisit.Enqueue(userOne);
+            Queue<KeyValuePair<UserNode, int>> usersToVisit = new Queue<KeyValuePair<UserNode, int>>();
+
+            usersToVisit.Enqueue(new KeyValuePair<UserNode, int>(userOne, 0));
 
             while (usersToVisit.Count != 0)
             {
-                iteration += 1;
-                
-                UserNode currentUser = usersToVisit.Dequeue();
-                
-                visitedUsers.Add(currentUser);
+                KeyValuePair<UserNode, int> currentUser = usersToVisit.Dequeue();
 
-                foreach (UserNode friend in currentUser.Friends)
+                visitedUsers.Add(currentUser.Key);
+
+                foreach (UserNode friend in currentUser.Key.Friends)
                 {
-                    if (visitedUsers.Contains(friend) || usersToVisit.Contains(friend)) continue;
-                    if (friend.Id.Equals(userTwo.Id)) return iteration;
-                    usersToVisit.Enqueue(friend);
+                    IEnumerable<UserNode> currentlyQueuedUsers =
+                        from user in usersToVisit
+                        select user.Key;
+                    
+                    if (visitedUsers.Contains(friend) || currentlyQueuedUsers.Contains(friend)) continue;
+                    if (friend.Id.Equals(userTwo.Id)) return currentUser.Value + 1;
+                    usersToVisit.Enqueue(new KeyValuePair<UserNode, int>(friend, currentUser.Value + 1));
                 }
             }
 
-            return iteration;
+            return 0;
         }
 
         public List<UserNode> GetFriendsInDistance(UserNode user, int distance)
