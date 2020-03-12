@@ -1,4 +1,4 @@
-using BFS_c_sharp.Model;
+﻿using BFS_c_sharp.Model;
 using System;
 using System.Collections.Generic;
 
@@ -17,6 +17,8 @@ namespace BFS_c_sharp
             {
                 Console.WriteLine(user);
             }
+            
+            Console.WriteLine($"The number of users the algorithm traversed through: {breadthFirstSearch.TraverseGraph()}");
 
             Console.WriteLine("Done");
             Console.ReadKey();
