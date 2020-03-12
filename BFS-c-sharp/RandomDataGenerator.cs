@@ -55,7 +55,7 @@ namespace BFS_c_sharp
 
         private UserNode GenerateNewUser()
         {
-            return new UserNode(GetRandomElement(firstNames), GetRandomElement(lastNames));
+            return new UserNode(GetRandomElement(firstNames), GetRandomElement(lastNames), Guid.NewGuid().ToString());
         }
 
         private string GetRandomElement(string[] array)

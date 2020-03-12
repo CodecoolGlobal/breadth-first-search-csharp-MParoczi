@@ -4,7 +4,7 @@ namespace BFS_c_sharp.Model
 {
     public class UserNode
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         private readonly HashSet<UserNode> _friends = new HashSet<UserNode>();
@@ -17,10 +17,11 @@ namespace BFS_c_sharp.Model
 
         public UserNode() { }
 
-        public UserNode(string firstName, string lastName)
+        public UserNode(string firstName, string lastName, string id)
         {
             FirstName = firstName;
             LastName = lastName;
+            Id = id;
         }
 
         public void AddFriend(UserNode friend)
