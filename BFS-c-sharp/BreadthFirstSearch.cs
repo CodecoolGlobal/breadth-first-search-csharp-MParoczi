@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BFS_c_sharp.Model;
 
 namespace BFS_c_sharp
@@ -10,6 +11,21 @@ namespace BFS_c_sharp
         public BreadthFirstSearch(List<UserNode> graph)
         {
             _graph = graph;
+        }
+
+        public int GetDistanceBetweenTwoUsers(UserNode userOne, UserNode userTwo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<UserNode> GetFriendsInDistance(UserNode user, int distance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<List<UserNode>> GetShortestPathBetweenTwoUsers(UserNode userOne, UserNode userTwo)
+        {
+            throw new NotImplementedException();
         }
     }
 }
