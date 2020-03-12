@@ -1,4 +1,4 @@
-﻿using BFS_c_sharp.Model;
+using BFS_c_sharp.Model;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +11,8 @@ namespace BFS_c_sharp
             RandomDataGenerator generator = new RandomDataGenerator();
             List<UserNode> users = generator.Generate();
 
+            BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(users);
+            
             foreach (var user in users)
             {
                 Console.WriteLine(user);
