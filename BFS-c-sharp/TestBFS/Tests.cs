@@ -65,5 +65,18 @@ namespace TestBFS
             
             Assert.AreEqual(1, result);
         }
+        
+        [Test]
+        public void GetDistanceBetweenTwoUsers_TwoDistantUser_Two()
+        {
+            List<UserNode> users = GenerateTestGraph();
+            BreadthFirstSearch bfs = new BreadthFirstSearch(users);
+            UserNode userOne = users.Find(u => u.LastName.Equals("A"));
+            UserNode userTwo = users.Find(u => u.LastName.Equals("D"));
+
+            int result = bfs.GetDistanceBetweenTwoUsers(userOne, userTwo);
+            
+            Assert.AreEqual(2, result);
+        }
     }
 }
