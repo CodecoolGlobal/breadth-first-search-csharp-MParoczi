@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using BFS_c_sharp.Model;
 
@@ -13,7 +13,7 @@ namespace BFS_c_sharp
             _graph = graph;
         }
 
-        public void TraverseGraph()
+        public int TraverseGraph()
         {
             throw new NotImplementedException();
         }
