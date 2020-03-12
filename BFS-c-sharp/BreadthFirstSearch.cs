@@ -13,6 +13,11 @@ namespace BFS_c_sharp
             _graph = graph;
         }
 
+        public void TraverseGraph()
+        {
+            throw new NotImplementedException();
+        }
+
         public int GetDistanceBetweenTwoUsers(UserNode userOne, UserNode userTwo)
         {
             throw new NotImplementedException();
