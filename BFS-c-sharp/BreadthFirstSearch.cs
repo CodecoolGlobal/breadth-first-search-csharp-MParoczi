@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using BFS_c_sharp.Model;
 
@@ -15,7 +15,30 @@ namespace BFS_c_sharp
 
         public int TraverseGraph()
         {
-            throw new NotImplementedException();
+            List<UserNode> visitedUsers = new List<UserNode>();
+            Queue<UserNode> usersToVisit = new Queue<UserNode>();
+            int iteration = 0;
+            
+            usersToVisit.Enqueue(_graph[0]);
+
+            while (usersToVisit.Count != 0)
+            {
+                iteration += 1;
+                
+                UserNode currentUser = usersToVisit.Dequeue();
+                
+                visitedUsers.Add(currentUser);
+
+                foreach (UserNode friend in currentUser.Friends)
+                {
+                    if (!visitedUsers.Contains(friend) && !usersToVisit.Contains(friend))
+                    {
+                        usersToVisit.Enqueue(friend);
+                    }
+                }
+            }
+
+            return iteration;
         }
 
         public int GetDistanceBetweenTwoUsers(UserNode userOne, UserNode userTwo)
