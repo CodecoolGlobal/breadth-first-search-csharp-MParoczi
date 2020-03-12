@@ -62,16 +62,11 @@ namespace BFS_c_sharp
 
                 foreach (UserNode friend in currentUser.Key.Friends)
                 {
-                    IEnumerable<UserNode> currentlyQueuedUsers =
-                        from user in usersToVisit
-                        select user.Key;
-                    
-                    if (visitedUsers.Contains(friend) || currentlyQueuedUsers.Contains(friend)) continue;
+                    if (visitedUsers.Contains(friend) || usersToVisit.Select(u => u.Key).Contains(friend)) continue;
                     if (friend.Id.Equals(userTwo.Id)) return currentUser.Value + 1;
                     usersToVisit.Enqueue(new KeyValuePair<UserNode, int>(friend, currentUser.Value + 1));
                 }
             }
-
             return 0;
         }
 
