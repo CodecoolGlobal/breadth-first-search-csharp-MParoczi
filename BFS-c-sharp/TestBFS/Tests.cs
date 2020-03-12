@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BFS_c_sharp;
 using BFS_c_sharp.Model;
 using NUnit.Framework;
 
@@ -41,9 +42,15 @@ namespace TestBFS
         }
 
         [Test]
-        public void Test1()
+        public void GetDistanceBetweenTwoUsers_TwoUserTheSame_Zero()
         {
-            Assert.True(true);
+            List<UserNode> users = GenerateTestGraph();
+            BreadthFirstSearch bfs = new BreadthFirstSearch(users);
+            UserNode userOne = users.Find(u => u.LastName.Equals("A"));
+
+            int result = bfs.GetDistanceBetweenTwoUsers(userOne, userOne);
+            
+            Assert.AreEqual(0, result);
         }
     }
 }
