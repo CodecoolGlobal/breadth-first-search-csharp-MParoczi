@@ -20,6 +20,13 @@ namespace BFS_c_sharp
             
             Console.WriteLine($"The number of users the algorithm traversed through: {breadthFirstSearch.TraverseGraph()}");
 
+            Random random = new Random();
+            
+            UserNode userOne = users[random.Next(0, users.Count)];
+            UserNode userTwo = users[random.Next(0, users.Count)];
+            
+            Console.WriteLine($"The distance between {userOne} and {userTwo} is {breadthFirstSearch.GetDistanceBetweenTwoUsers(userOne, userTwo)}");
+
             Console.WriteLine("Done");
             Console.ReadKey();
         }
