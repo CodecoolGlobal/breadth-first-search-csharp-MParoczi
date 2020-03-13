@@ -93,6 +93,16 @@ namespace TestBFS
             
             Assert.AreEqual(new List<string> {"C", "E", "G"}, result);
         }
+        
+        [Test]
+        public void GetFriendsInDistance_DistanceTwoFromF_CAD()
+        {
+            UserNode user = Users.Find(u => u.LastName.Equals("F"));
+
+            List<string> result = BreadthFirstSearch.GetFriendsInDistance(user, 2).Select(u => u.LastName).ToList();
+            
+            Assert.AreEqual(new List<string> {"C", "A", "D"}, result);
+        }
 
         private void ArrangeTwoUsers(out UserNode userOne, out UserNode userTwo, string symbolOne, string symbolTwo)
         {
