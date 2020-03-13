@@ -9,7 +9,10 @@ namespace TestBFS
     [TestFixture]
     public class Tests
     {
-        private List<UserNode> GenerateTestGraph()
+        private static readonly List<UserNode> Users = GenerateTestGraph();
+        private static readonly  BreadthFirstSearch BreadthFirstSearch = new BreadthFirstSearch(Users);
+        
+        private static List<UserNode> GenerateTestGraph()
         {
             List<UserNode> users = new List<UserNode>();
             
@@ -20,31 +23,20 @@ namespace TestBFS
             UserNode e = new UserNode("Node", "E", Guid.NewGuid().ToString());
             UserNode f = new UserNode("Node", "F", Guid.NewGuid().ToString());
             UserNode g = new UserNode("Node", "G", Guid.NewGuid().ToString());
-
-            a.Friends.Add(b);
-            a.Friends.Add(c);
-            a.Friends.Add(e);
-
-            b.Friends.Add(a);
-            b.Friends.Add(e);
-
-            c.Friends.Add(a);
-            c.Friends.Add(d);
-            c.Friends.Add(f);
-
-            d.Friends.Add(c);
-            d.Friends.Add(e);
-            d.Friends.Add(g);
-
-            e.Friends.Add(a);
-            e.Friends.Add(b);
-            e.Friends.Add(d);
-            e.Friends.Add(g);
-
-            f.Friends.Add(c);
-
-            g.Friends.Add(d);
-            g.Friends.Add(e);
+            
+            foreach (UserNode user in new List<UserNode> {b, c, e}) a.Friends.Add(user);
+            
+            foreach (UserNode user in new List<UserNode> {a, e}) b.Friends.Add(user);
+            
+            foreach (UserNode user in new List<UserNode> {a, d, f}) c.Friends.Add(user);
+            
+            foreach (UserNode user in new List<UserNode> {c,e, g}) d.Friends.Add(user);
+            
+            foreach (UserNode user in new List<UserNode> {a, b, d, g}) e.Friends.Add(user);
+            
+            foreach (UserNode user in new List<UserNode> {c}) f.Friends.Add(user);
+            
+            foreach (UserNode user in new List<UserNode> {d, e}) g.Friends.Add(user);
             
             users.AddRange(new []{a, b, c, d, e, f, g});
 
@@ -54,11 +46,9 @@ namespace TestBFS
         [Test]
         public void GetDistanceBetweenTwoUsers_TwoUserTheSame_Zero()
         {
-            List<UserNode> users = GenerateTestGraph();
-            BreadthFirstSearch bfs = new BreadthFirstSearch(users);
-            UserNode userOne = users.Find(u => u.LastName.Equals("A"));
+            UserNode userOne = Users.Find(u => u.LastName.Equals("A"));
 
-            int result = bfs.GetDistanceBetweenTwoUsers(userOne, userOne);
+            int result = BreadthFirstSearch.GetDistanceBetweenTwoUsers(userOne, userOne);
             
             Assert.AreEqual(0, result);
         }
@@ -66,12 +56,9 @@ namespace TestBFS
         [Test]
         public void GetDistanceBetweenTwoUsers_TwoAdjacentUser_One()
         {
-            List<UserNode> users = GenerateTestGraph();
-            BreadthFirstSearch bfs = new BreadthFirstSearch(users);
-            UserNode userOne = users.Find(u => u.LastName.Equals("A"));
-            UserNode userTwo = users.Find(u => u.LastName.Equals("B"));
+            ArrangeTwoUsers(out var userOne, out var userTwo, "A", "B");
 
-            int result = bfs.GetDistanceBetweenTwoUsers(userOne, userTwo);
+            int result = BreadthFirstSearch.GetDistanceBetweenTwoUsers(userOne, userTwo);
             
             Assert.AreEqual(1, result);
         }
@@ -79,12 +66,9 @@ namespace TestBFS
         [Test]
         public void GetDistanceBetweenTwoUsers_TwoDistantUser_Two()
         {
-            List<UserNode> users = GenerateTestGraph();
-            BreadthFirstSearch bfs = new BreadthFirstSearch(users);
-            UserNode userOne = users.Find(u => u.LastName.Equals("A"));
-            UserNode userTwo = users.Find(u => u.LastName.Equals("D"));
+            ArrangeTwoUsers(out var userOne, out var userTwo, "A", "D");
 
-            int result = bfs.GetDistanceBetweenTwoUsers(userOne, userTwo);
+            int result = BreadthFirstSearch.GetDistanceBetweenTwoUsers(userOne, userTwo);
             
             Assert.AreEqual(2, result);
         }
@@ -92,14 +76,17 @@ namespace TestBFS
         [Test]
         public void GetDistanceBetweenTwoUsers_TwoFarDistantUser_Three()
         {
-            List<UserNode> users = GenerateTestGraph();
-            BreadthFirstSearch bfs = new BreadthFirstSearch(users);
-            UserNode userOne = users.Find(u => u.LastName.Equals("E"));
-            UserNode userTwo = users.Find(u => u.LastName.Equals("F"));
+            ArrangeTwoUsers(out var userOne, out var userTwo, "E", "F");
 
-            int result = bfs.GetDistanceBetweenTwoUsers(userOne, userTwo);
+            int result = BreadthFirstSearch.GetDistanceBetweenTwoUsers(userOne, userTwo);
             
             Assert.AreEqual(3, result);
+        }
+
+        private void ArrangeTwoUsers(out UserNode userOne, out UserNode userTwo, string symbolOne, string symbolTwo)
+        {
+            userOne = Users.Find(u => u.LastName.Equals(symbolOne));
+            userTwo = Users.Find(u => u.LastName.Equals(symbolTwo));
         }
     }
 }
