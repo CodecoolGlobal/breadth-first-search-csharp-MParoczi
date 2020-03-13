@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BFS_c_sharp;
 using BFS_c_sharp.Model;
 using NUnit.Framework;
@@ -81,6 +82,16 @@ namespace TestBFS
             int result = BreadthFirstSearch.GetDistanceBetweenTwoUsers(userOne, userTwo);
             
             Assert.AreEqual(3, result);
+        }
+        
+        [Test]
+        public void GetFriendsInDistance_DistanceOneFromD_CEG()
+        {
+            UserNode user = Users.Find(u => u.LastName.Equals("D"));
+
+            List<string> result = BreadthFirstSearch.GetFriendsInDistance(user, 1).Select(u => u.LastName).ToList();
+            
+            Assert.AreEqual(new List<string> {"C", "E", "G"}, result);
         }
 
         private void ArrangeTwoUsers(out UserNode userOne, out UserNode userTwo, string symbolOne, string symbolTwo)
