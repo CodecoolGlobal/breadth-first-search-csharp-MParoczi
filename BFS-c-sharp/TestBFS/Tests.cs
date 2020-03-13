@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using BFS_c_sharp;
 using BFS_c_sharp.Model;
@@ -87,6 +87,19 @@ namespace TestBFS
             int result = bfs.GetDistanceBetweenTwoUsers(userOne, userTwo);
             
             Assert.AreEqual(2, result);
+        }
+        
+        [Test]
+        public void GetDistanceBetweenTwoUsers_TwoFarDistantUser_Three()
+        {
+            List<UserNode> users = GenerateTestGraph();
+            BreadthFirstSearch bfs = new BreadthFirstSearch(users);
+            UserNode userOne = users.Find(u => u.LastName.Equals("E"));
+            UserNode userTwo = users.Find(u => u.LastName.Equals("F"));
+
+            int result = bfs.GetDistanceBetweenTwoUsers(userOne, userTwo);
+            
+            Assert.AreEqual(3, result);
         }
     }
 }
