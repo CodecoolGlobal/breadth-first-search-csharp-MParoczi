@@ -18,6 +18,8 @@ namespace TestBFS
             UserNode c = new UserNode("Node", "C", Guid.NewGuid().ToString());
             UserNode d = new UserNode("Node", "D", Guid.NewGuid().ToString());
             UserNode e = new UserNode("Node", "E", Guid.NewGuid().ToString());
+            UserNode f = new UserNode("Node", "F", Guid.NewGuid().ToString());
+            UserNode g = new UserNode("Node", "G", Guid.NewGuid().ToString());
 
             a.Friends.Add(b);
             a.Friends.Add(c);
@@ -28,13 +30,21 @@ namespace TestBFS
 
             c.Friends.Add(a);
             c.Friends.Add(d);
+            c.Friends.Add(f);
 
             d.Friends.Add(c);
             d.Friends.Add(e);
+            d.Friends.Add(g);
 
             e.Friends.Add(a);
             e.Friends.Add(b);
             e.Friends.Add(d);
+            e.Friends.Add(g);
+
+            f.Friends.Add(c);
+
+            g.Friends.Add(d);
+            g.Friends.Add(e);
             
             users.AddRange(new []{a, b, c, d, e});
 
