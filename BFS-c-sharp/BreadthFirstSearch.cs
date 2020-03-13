@@ -72,7 +72,34 @@ namespace BFS_c_sharp
 
         public List<UserNode> GetFriendsInDistance(UserNode user, int distance)
         {
-            throw new NotImplementedException();
+            if (distance.Equals(0))
+            {
+                return new List<UserNode> {user};
+            }
+            
+            List<UserNode> visitedUsers = new List<UserNode>();
+            Queue<KeyValuePair<UserNode, int>> usersToVisit = new Queue<KeyValuePair<UserNode, int>>();
+            
+            usersToVisit.Enqueue(new KeyValuePair<UserNode, int>(user, 0));
+            
+            while (usersToVisit.Count != 0)
+            {
+                KeyValuePair<UserNode, int> currentUser = usersToVisit.Dequeue();
+
+                if (currentUser.Value > distance)
+                {
+                    return visitedUsers;
+                }
+                
+                visitedUsers.Add(currentUser.Key);
+                
+                foreach (UserNode friend in currentUser.Key.Friends)
+                {
+                    if (visitedUsers.Contains(friend) || usersToVisit.Select(u => u.Key).Contains(friend)) continue;
+                    usersToVisit.Enqueue(new KeyValuePair<UserNode, int>(friend, currentUser.Value + 1));
+                }
+            }
+            return null;
         }
 
         public List<List<UserNode>> GetShortestPathBetweenTwoUsers(UserNode userOne, UserNode userTwo)
