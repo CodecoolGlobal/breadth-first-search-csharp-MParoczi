@@ -26,6 +26,12 @@ namespace BFS_c_sharp
             UserNode userTwo = users[random.Next(0, users.Count)];
             
             Console.WriteLine($"The distance between {userOne} and {userTwo} is {breadthFirstSearch.GetDistanceBetweenTwoUsers(userOne, userTwo)}");
+            
+            Console.WriteLine($"{userOne} closest friends are: ");
+            foreach (UserNode friend in breadthFirstSearch.GetFriendsInDistance(userOne, 1))
+            {
+                Console.WriteLine(friend);
+            }
 
             Console.WriteLine("Done");
             Console.ReadKey();
