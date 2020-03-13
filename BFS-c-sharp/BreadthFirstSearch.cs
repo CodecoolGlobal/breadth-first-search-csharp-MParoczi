@@ -88,7 +88,7 @@ namespace BFS_c_sharp
 
                 if (currentUser.Value > distance)
                 {
-                    return visitedUsers;
+                    return visitedUsers.Where(u => !u.Equals(user)).ToList();
                 }
                 
                 visitedUsers.Add(currentUser.Key);
