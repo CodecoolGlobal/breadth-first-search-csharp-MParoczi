@@ -88,7 +88,7 @@ namespace BFS_c_sharp
 
                 if (currentUser.Value > distance)
                 {
-                    return visitedUsers.Where(u => !u.Equals(user)).ToList();
+                    break;
                 }
                 
                 visitedUsers.Add(currentUser.Key);
@@ -99,7 +99,7 @@ namespace BFS_c_sharp
                     usersToVisit.Enqueue(new KeyValuePair<UserNode, int>(friend, currentUser.Value + 1));
                 }
             }
-            return null;
+            return visitedUsers.Where(u => !u.Equals(user)).ToList();
         }
 
         public List<List<UserNode>> GetShortestPathBetweenTwoUsers(UserNode userOne, UserNode userTwo)
