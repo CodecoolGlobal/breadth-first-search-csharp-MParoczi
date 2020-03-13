@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using BFS_c_sharp;
 using BFS_c_sharp.Model;
@@ -46,7 +46,7 @@ namespace TestBFS
             g.Friends.Add(d);
             g.Friends.Add(e);
             
-            users.AddRange(new []{a, b, c, d, e});
+            users.AddRange(new []{a, b, c, d, e, f, g});
 
             return users;
         }
