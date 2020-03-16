@@ -109,43 +109,43 @@ namespace BFS_c_sharp
                 return null;
             }
             
-            List<KeyValuePair<UserNode, UserNode>> visitedUsers = new List<KeyValuePair<UserNode, UserNode>>(); //Key: user to visit, Value: "Parent" user
-            Queue<KeyValuePair<UserNode, UserNode>> usersToVisit = new Queue<KeyValuePair<UserNode, UserNode>>();
-            List<List<UserNode>> result = new List<List<UserNode>>();
-
-            usersToVisit.Enqueue(new KeyValuePair<UserNode, UserNode>(userOne, null));
+            List<KeyValuePair<UserNode, List<UserNode>>> visitedUsers = new List<KeyValuePair<UserNode, List<UserNode>>>();
+            Queue<KeyValuePair<UserNode, List<UserNode>>> usersToVisit = new Queue<KeyValuePair<UserNode, List<UserNode>>>();
+            int shortestDistance = GetDistanceBetweenTwoUsers(userOne, userTwo);
+            
+            usersToVisit.Enqueue(new KeyValuePair<UserNode, List<UserNode>>(userOne, new List<UserNode> {userOne}));
 
             while (usersToVisit.Count != 0)
             {
-                KeyValuePair<UserNode, UserNode> currentUser = usersToVisit.Dequeue();
-
+                KeyValuePair<UserNode, List<UserNode>> currentUser = usersToVisit.Dequeue();
+                
                 visitedUsers.Add(currentUser);
                 
-                if (usersToVisit.Select(u => u.Key).Contains(userTwo)) continue;
-               
                 foreach (UserNode friend in currentUser.Key.Friends)
                 {
-                    if (!friend.Equals(userTwo) ||
-                        visitedUsers.Select(u => u.Key).Contains(friend) ||
-                        usersToVisit.Select(u => u.Key).Contains(friend)) continue;
-                    usersToVisit.Enqueue(new KeyValuePair<UserNode, UserNode>(friend, currentUser.Key));
+                    if (CanContinueListingVisitedUsers(userTwo, friend, visitedUsers, usersToVisit, currentUser, shortestDistance)) continue;
+                    List<UserNode> path = currentUser.Value.ToList();
+                    path.Add(friend);
+                    usersToVisit.Enqueue(new KeyValuePair<UserNode, List<UserNode>>(friend, path));
                 }
             }
 
-            while (visitedUsers.Select(u => u.Key).Contains(userTwo))
-            {
-                List<UserNode> subResult = new List<UserNode>();
-                KeyValuePair<UserNode, UserNode> user = visitedUsers.Find(u => u.Key == userTwo);
+            return visitedUsers.Where(u => u.Key.Equals(userTwo)).Select(u => u.Value).ToList();
 
-                while (user.Value != null)
-                {
-                    subResult.Add(user.Key);
-                    user = visitedUsers.Find(u => u.Key == user.Value);
-                }
-                result.Add(subResult);
-            }
+        }
 
-            return result;
+        private bool CanContinueListingVisitedUsers(UserNode userTwo,
+                              UserNode friend,
+                              List<KeyValuePair<UserNode,
+                              List<UserNode>>> visitedUsers,
+                              Queue<KeyValuePair<UserNode,
+                              List<UserNode>>> usersToVisit,
+                              KeyValuePair<UserNode, List<UserNode>> currentUser,
+                              int shortestDistance)
+        {
+            return !friend.Equals(userTwo) || visitedUsers.Select(u => u.Key).Contains(friend) ||
+                   usersToVisit.Select(u => u.Key).Contains(friend) ||
+                   currentUser.Value.Count > shortestDistance;
         }
     }
 }
