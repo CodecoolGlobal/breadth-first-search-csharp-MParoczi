@@ -115,6 +115,19 @@ namespace TestBFS
             
             Assert.AreEqual(expected, result);
         }
+        
+        [Test]
+        public void GetShortestPathBetweenTwoUsers_PathBetweenAE_AE()
+        {
+            ArrangeTwoUsers(out var userOne, out var userTwo, "A", "E");
+
+            List<List<UserNode>> result = BreadthFirstSearch.GetShortestPathBetweenTwoUsers(userOne, userTwo);
+            
+
+            List<List<UserNode>> expected = new List<List<UserNode>>() {new List<UserNode> {userOne, userTwo}};
+            
+            Assert.AreEqual(expected, result);
+        }
 
         private void ArrangeTwoUsers(out UserNode userOne, out UserNode userTwo, string symbolOne, string symbolTwo)
         {
